@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LeaveManagementSystem.Web.Data;
+using LeaveManagementSystem.Web.Models.LeaveTypes;
 
 namespace LeaveManagementSystem.Web.Controllers
     {
@@ -22,7 +23,17 @@ namespace LeaveManagementSystem.Web.Controllers
         public async Task<IActionResult> Index ()
             {
             var leaveTypeList = await _context.LeaveTypes.ToListAsync();
-            return View(leaveTypeList);
+
+            //convert the data model into a view model
+            var viewData = leaveTypeList.Select(v => new IndexViewModel()
+                {
+                Id = v.Id,
+                Name = v.Name,
+                NumberOfDays = v.NumberOfDays
+                });
+
+            // return the view model to the view
+            return View(viewData);
             }
 
         // GET: LeaveTypes/Details/5
