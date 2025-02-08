@@ -1,10 +1,10 @@
 ﻿@model LeaveManagementSystem.Web.Data.LeaveType
 
 @{
-    ViewData["Title"] = "Details of LeaveTypes";
+    ViewData["Title"] = $"{Model.Name} Details";
 }
 
-<h1>Details LeaveType</h1>
+<h1>Details of  '@Model.Name'</h1>
 
 <div>
     <hr />
@@ -24,6 +24,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Edit</a>
     <a asp-action="Index" class="btn btn-primary">Back to List</a>
 </div>
