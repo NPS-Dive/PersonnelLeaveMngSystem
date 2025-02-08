@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,11 @@ namespace LeaveManagementSystem.Web.Controllers
     public class LeaveTypesController : Controller
         {
         private readonly ApplicationDbContext _context;
-
-        public LeaveTypesController ( ApplicationDbContext context )
+        private readonly IMapper _mapper;
+        public LeaveTypesController ( ApplicationDbContext context, IMapper mapper )
             {
             _context = context;
+            _mapper = mapper;
             }
 
         // GET: LeaveTypes
@@ -24,15 +26,22 @@ namespace LeaveManagementSystem.Web.Controllers
             {
             var leaveTypeList = await _context.LeaveTypes.ToListAsync();
 
-            //convert the data model into a view model
-            var viewData = leaveTypeList.Select(v => new IndexViewModel()
-                {
-                Id = v.Id,
-                Name = v.Name,
-                NumberOfDays = v.NumberOfDays
-                });
+            //convert the data model into a view model:
+            // A: manual
+            //var viewData = leaveTypeList.Select(v => new IndexViewModel()
+            //    {
+            //    Id = v.Id,
+            //    Name = v.Name,
+            //    NumberOfDays = v.NumberOfDays
+            //    });
+
+            //B: using AutoMapper
+            var viewData = _mapper.Map<List<LeaveTypeReadOnlyViewModel>>(leaveTypeList);
+
 
             // return the view model to the view
+
+
             return View(viewData);
             }
 
@@ -51,7 +60,9 @@ namespace LeaveManagementSystem.Web.Controllers
                 return NotFound();
                 }
 
-            return View(leaveType);
+            var viewData = _mapper.Map<LeaveTypeReadOnlyViewModel>(leaveType);
+
+            return View(viewData);
             }
 
         // GET: LeaveTypes/Create

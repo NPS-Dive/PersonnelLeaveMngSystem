@@ -1,6 +1,6 @@
 ﻿namespace LeaveManagementSystem.Web.Models.LeaveTypes;
 
-public class IndexViewModel
+public class LeaveTypeReadOnlyViewModel
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
