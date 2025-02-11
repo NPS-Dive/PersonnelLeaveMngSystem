@@ -8,6 +8,10 @@ public class LeaveTypeAutoMapperProfile : Profile
     {
         public LeaveTypeAutoMapperProfile()
         {
-            CreateMap<LeaveType, LeaveTypeReadOnlyViewModel>().ReverseMap();
+            CreateMap<LeaveType, LeaveTypeReadOnlyViewModel>();
+
+            CreateMap<LeaveTypeCreateViewModel, LeaveType>();
+
+            CreateMap<leaveTypeEditViewModel, LeaveType>().ReverseMap();
         }
     }
