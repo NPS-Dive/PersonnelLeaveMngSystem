@@ -1,5 +1,6 @@
 using System.Reflection;
 using LeaveManagementSystem.Web.Data;
+using LeaveManagementSystem.Web.Services.LeaveTypes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,9 +13,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 #region AutoMapper
-
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+#endregion
 
+#region contract dependency Injection
+builder.Services.AddScoped<ILeaveTypeService,LeaveTypeService>();
 #endregion
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
